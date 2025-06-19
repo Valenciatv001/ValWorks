@@ -19,6 +19,7 @@ export default function RootLayout() {
     <React.Fragment>
       <Stack>
         <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
         <Stack.Screen name="+not-found" />
