@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 120,
+    marginBottom: 80,
   },
   image: {
     height: PAGE_HEIGHT * 0.5,
