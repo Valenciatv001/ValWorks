@@ -1,6 +1,7 @@
 import Dot from "@/src/components/Dot";
 import { BACKGROUND_COLOR, PAGES } from "@/src/constants/constants";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -10,6 +11,8 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
+
+import { router } from "expo-router";
 import Page, { PAGE_WIDTH } from "../../components/Page";
 
 export default function HomeScreen() {
@@ -27,10 +30,27 @@ export default function HomeScreen() {
 
   const scrollRef = useAnimatedRef<ScrollView>();
 
+  //   const onIconPress = useCallback(() => {
+  //     if (activeIndex.value === PAGES.length - 1) return;
+  //     scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
+  //   }, [activeIndex, scrollRef]);
+
+  const handleCreate = React.useCallback(async () => {
+    try {
+      await AsyncStorage.setItem("completedOnboarding", "Done");
+      router.push("/(auth)");
+    } catch (error) {
+      console.error("Failed to save onboarding status", error);
+    }
+  }, []);
+
   const onIconPress = useCallback(() => {
-    if (activeIndex.value === PAGES.length - 1) return;
-    scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
-  }, [activeIndex, scrollRef]);
+    if (activeIndex.value === PAGES.length - 1) {
+      handleCreate();
+    } else {
+      scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
+    }
+  }, [activeIndex, scrollRef, handleCreate]);
 
   return (
     <View style={styles.container}>
@@ -39,7 +59,6 @@ export default function HomeScreen() {
         ref={scrollRef as any}
         style={{ flex: 1 }}
         horizontal
-        pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={16}

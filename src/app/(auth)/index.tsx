@@ -21,7 +21,7 @@ import Svg, { ClipPath, Ellipse, Image } from "react-native-svg";
 
 const { height } = Dimensions.get("window");
 
-export default function Onboarding() {
+export default function Auth() {
   const { height, width } = Dimensions.get("window");
   const imagePosition = useSharedValue(1);
   const formButtonScale = useSharedValue(1);
